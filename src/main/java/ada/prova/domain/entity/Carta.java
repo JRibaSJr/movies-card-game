@@ -1,6 +1,8 @@
 package ada.prova.domain.entity;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import java.math.BigDecimal;
 import java.util.Objects;
 
@@ -12,20 +14,21 @@ public class Carta {
     @Column(name = "titulo", length = 50)
     private String titulo;
 
-    private BigDecimal pontuacao;
+    @Column(name = "score", length = 20, precision = 20, scale = 2)
+    private BigDecimal score;
 
     public Carta() {
     }
 
-    public Carta(String imdb_id, BigDecimal pontuacao) {
+    public Carta(String imdb_id, BigDecimal score) {
         this.imdb_id = imdb_id;
-        this.pontuacao = pontuacao;
+        this.score = score;
     }
 
-    public Carta(String imdb_id, String titulo, BigDecimal pontuacao) {
+    public Carta(String imdb_id, String titulo, BigDecimal score) {
         this.imdb_id = imdb_id;
         this.titulo = titulo;
-        this.pontuacao = pontuacao;
+        this.score = score;
     }
 
     public String getImdb_id() {
@@ -44,12 +47,12 @@ public class Carta {
         this.titulo = titulo;
     }
 
-    public BigDecimal getPontuacao() {
-        return pontuacao;
+    public BigDecimal getScore() {
+        return score;
     }
 
-    public void setPontuacao(BigDecimal pontuacao) {
-        this.pontuacao = pontuacao;
+    public void setScore(BigDecimal score) {
+        this.score = score;
     }
 
     @Override
@@ -57,7 +60,7 @@ public class Carta {
         return "Carta{" +
                 "imdb_id='" + imdb_id + '\'' +
                 ", titulo='" + titulo + '\'' +
-                ", pontuacao=" + pontuacao +
+                ", score=" + score +
                 '}';
     }
 

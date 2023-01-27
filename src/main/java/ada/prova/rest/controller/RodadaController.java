@@ -1,6 +1,5 @@
 package ada.prova.rest.controller;
 
-import ada.prova.domain.entity.Jogador;
 import ada.prova.domain.entity.Rodada;
 import ada.prova.domain.repository.Rodadas;
 import org.springframework.data.domain.Example;

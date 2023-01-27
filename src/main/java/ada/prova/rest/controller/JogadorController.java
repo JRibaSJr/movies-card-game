@@ -4,11 +4,12 @@ import ada.prova.domain.entity.Jogador;
 import ada.prova.domain.repository.Jogadores;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+
+import static org.springframework.http.HttpStatus.*;
 
 @RestController
 @RequestMapping("/jogadores")
@@ -21,7 +22,7 @@ public class JogadorController {
     }
 
     @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
+    @ResponseStatus(CREATED)
     public Jogador save(@RequestBody Jogador jogador){
         return jogadores.save(jogador);
     }
@@ -31,12 +32,12 @@ public class JogadorController {
         return jogadores
                 .findById(jogador)
                 .orElseThrow(() ->
-                        new ResponseStatusException(HttpStatus.NOT_FOUND,
+                        new ResponseStatusException(NOT_FOUND,
                                 "Jogador não encontrado"));
     }
 
     @PutMapping("{jogador}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @ResponseStatus(NO_CONTENT)
     public void update(@PathVariable String jogador,
                        @RequestBody Jogador jogadorAtualizado){
         jogadores
@@ -45,12 +46,12 @@ public class JogadorController {
                     jogadorAtualizado.setJogador(j.getJogador());
                     jogadores.save(jogadorAtualizado);
                     return j;
-                }).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                }).orElseThrow(() -> new ResponseStatusException(NOT_FOUND,
                         "Jogador não encontrado") );
     }
 
     @DeleteMapping("{jogador}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @ResponseStatus(NO_CONTENT)
     public void delete(@PathVariable String jogador) {
         jogadores
                 .findById(jogador)
@@ -58,7 +59,7 @@ public class JogadorController {
                     jogadores.delete(j);
                     return j;
                 })
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                .orElseThrow(() -> new ResponseStatusException(NOT_FOUND,
                         "Jogador não encontrado"));
     }
 

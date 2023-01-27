@@ -4,11 +4,12 @@ import ada.prova.domain.entity.Carta;
 import ada.prova.domain.repository.Cartas;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+
+import static org.springframework.http.HttpStatus.*;
 
 @RestController
 @RequestMapping("/cartas")
@@ -21,7 +22,7 @@ public class CartaController {
     }
 
     @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
+    @ResponseStatus(CREATED)
     public Carta save(@RequestBody Carta carta){
         return cartas.save(carta);
     }
@@ -31,12 +32,12 @@ public class CartaController {
         return cartas
                 .findById(carta)
                 .orElseThrow(()->
-                        new ResponseStatusException(HttpStatus.NOT_FOUND,
+                        new ResponseStatusException(NOT_FOUND,
                                 "Carta não encontrada"));
     }
 
     @PutMapping("{carta}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @ResponseStatus(NO_CONTENT)
     public void update(@PathVariable String carta,
                        @RequestBody Carta cartaAtualizada){
         cartas.findById(carta)
@@ -44,19 +45,19 @@ public class CartaController {
                     cartaAtualizada.setImdb_id(c.getImdb_id());
                     cartas.save(cartaAtualizada);
                     return c;
-                }).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                }).orElseThrow(() -> new ResponseStatusException(NOT_FOUND,
                         "Carta não encontrada"));
     }
 
     @DeleteMapping("{carta}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @ResponseStatus(NO_CONTENT)
     public void delete(@PathVariable String carta){
         cartas.findById(carta)
                 .map(c ->{
                     cartas.delete(c);
                     return c;
                 })
-                .orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                .orElseThrow(()-> new ResponseStatusException(NOT_FOUND,
                         "Carta não encontrada"));
     }
 

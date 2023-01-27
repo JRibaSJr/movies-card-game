@@ -2,8 +2,12 @@ package ada.prova.domain.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -16,7 +20,11 @@ public class Jogador {
     @Column(name = "senha", length = 10)
     private String senha;
 
+    @Column(name = "record", length = 20, precision = 20, scale = 2)
     private BigDecimal record;
+
+    @OneToMany(mappedBy = "jogador")
+    private List<Partida> partidas;
 
     public Jogador() {
     }
@@ -51,6 +59,14 @@ public class Jogador {
 
     public void setRecord(BigDecimal record) {
         this.record = record;
+    }
+
+    public List<Partida> getPartidas() {
+        return partidas;
+    }
+
+    public void setPartidas(List<Partida> partidas) {
+        this.partidas = partidas;
     }
 
     @Override

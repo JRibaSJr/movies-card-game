@@ -1,39 +1,49 @@
 package ada.prova.domain.entity;
 
+import ada.prova.domain.enuns.MotivoEncerr;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import java.math.BigDecimal;
+import java.util.List;
 
 @Entity
 public class Partida {
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private Integer id;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "jogador")
     private Jogador jogador;
 
-    private boolean ativa = true;
-
-    @Column(name = "motivo_encerramento", length = 50)
-    private String motivo_encerramento;
+    @Enumerated(EnumType.STRING)
+    private MotivoEncerr motivoEncerramento;
 
     private int erros;
 
+    @Column(name = "pontuacao", length = 20, precision = 20, scale = 2)
     private BigDecimal pontuacao;
+
+    @OneToMany(mappedBy = "partida")
+    private List<Rodada> rodadas;
 
     public Partida() {
     }
 
     public Partida(Jogador jogador) {
         this.jogador = jogador;
-        this.ativa = true;
+        this.erros = 0;
+        this.motivoEncerramento = motivoEncerramento.ATIVA;
         this.pontuacao = BigDecimal.valueOf(0.0);
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public Jogador getJogador() {
@@ -44,20 +54,12 @@ public class Partida {
         this.jogador = jogador;
     }
 
-    public boolean isAtiva() {
-        return ativa;
+    public MotivoEncerr getMotivoEncerramento() {
+        return motivoEncerramento;
     }
 
-    public void setAtiva(boolean ativa) {
-        this.ativa = ativa;
-    }
-
-    public String getMotivo_encerramento() {
-        return motivo_encerramento;
-    }
-
-    public void setMotivo_encerramento(String motivo_encerramento) {
-        this.motivo_encerramento = motivo_encerramento;
+    public void setMotivoEncerramento(MotivoEncerr motivoEncerramento) {
+        this.motivoEncerramento = motivoEncerramento;
     }
 
     public int getErros() {
@@ -74,5 +76,13 @@ public class Partida {
 
     public void setPontuacao(BigDecimal pontuacao) {
         this.pontuacao = pontuacao;
+    }
+
+    public List<Rodada> getRodadas() {
+        return rodadas;
+    }
+
+    public void setRodadas(List<Rodada> rodadas) {
+        this.rodadas = rodadas;
     }
 }
